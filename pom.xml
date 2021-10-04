@@ -16,6 +16,7 @@
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
     <quarkus.platform.version>2.2.3.Final</quarkus.platform.version>
     <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
+    <plugin.spotless.version>2.12.2</plugin.spotless.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -50,7 +51,20 @@
   </dependencies>
   <build>
     <plugins>
-      <plugin>
+        <!-- Format Java and Scala with mvn spotless:apply -->
+        <plugin>
+            <groupId>com.diffplug.spotless</groupId>
+            <artifactId>spotless-maven-plugin</artifactId>
+            <version>${plugin.spotless.version}</version>
+            <configuration>
+                <java>
+                    <removeUnusedImports/>
+                    <googleJavaFormat/>
+                </java>
+            </configuration>
+        </plugin>
+
+        <plugin>
         <groupId>${quarkus.platform.group-id}</groupId>
         <artifactId>quarkus-maven-plugin</artifactId>
         <version>${quarkus.platform.version}</version>
