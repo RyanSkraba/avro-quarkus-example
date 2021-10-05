@@ -18,6 +18,7 @@
         <quarkus.platform.version>2.2.3.Final</quarkus.platform.version>
         <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
         <plugin.spotless.version>2.12.2</plugin.spotless.version>
+        <avro.version>1.10.2</avro.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -31,6 +32,11 @@
         </dependencies>
     </dependencyManagement>
     <dependencies>
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro</artifactId>
+            <version>${avro.version}</version>
+        </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-resteasy</artifactId>
@@ -63,6 +69,26 @@
                         <googleJavaFormat/>
                     </java>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.avro</groupId>
+                <artifactId>avro-maven-plugin</artifactId>
+                <version>${avro.version}</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>schema</goal>
+                            <goal>protocol</goal>
+                            <goal>idl-protocol</goal>
+                        </goals>
+                        <configuration>
+                            <enableDecimalLogicalType>true</enableDecimalLogicalType>
+                            <fieldVisibility>public</fieldVisibility>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
